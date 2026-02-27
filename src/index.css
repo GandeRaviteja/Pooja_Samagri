@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 36 50% 97%;
+    --foreground: 20 40% 12%;
+
+    --card: 36 40% 96%;
+    --card-foreground: 20 40% 12%;
+
+    --popover: 36 50% 97%;
+    --popover-foreground: 20 40% 12%;
+
+    --primary: 27 100% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 36 50% 92%;
+    --secondary-foreground: 20 40% 12%;
+
+    --muted: 36 30% 93%;
+    --muted-foreground: 20 15% 45%;
+
+    --accent: 43 96% 56%;
+    --accent-foreground: 20 40% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 36 30% 88%;
+    --input: 36 30% 88%;
+    --ring: 27 100% 55%;
+
+    --radius: 0.75rem;
+
+    --saffron: 27 100% 55%;
+    --saffron-light: 30 100% 62%;
+    --saffron-dark: 24 100% 45%;
+    --cream: 36 50% 97%;
+    --cream-dark: 36 50% 92%;
+    --gold: 43 96% 56%;
+    --gold-dark: 43 80% 42%;
+    --maroon: 0 60% 30%;
+    --vermillion: 8 85% 55%;
+
+    --sidebar-background: 36 40% 96%;
+    --sidebar-foreground: 20 40% 12%;
+    --sidebar-primary: 27 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 36 50% 92%;
+    --sidebar-accent-foreground: 20 40% 12%;
+    --sidebar-border: 36 30% 88%;
+    --sidebar-ring: 27 100% 55%;
+  }
+
+  .dark {
+    --background: 20 30% 8%;
+    --foreground: 36 50% 92%;
+    --card: 20 25% 12%;
+    --card-foreground: 36 50% 92%;
+    --popover: 20 25% 12%;
+    --popover-foreground: 36 50% 92%;
+    --primary: 27 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 20 20% 18%;
+    --secondary-foreground: 36 50% 92%;
+    --muted: 20 15% 20%;
+    --muted-foreground: 36 30% 60%;
+    --accent: 43 96% 56%;
+    --accent-foreground: 20 30% 15%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 20 15% 22%;
+    --input: 20 15% 22%;
+    --ring: 27 100% 55%;
+    --sidebar-background: 20 25% 10%;
+    --sidebar-foreground: 36 50% 92%;
+    --sidebar-primary: 27 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 20 15% 18%;
+    --sidebar-accent-foreground: 36 50% 92%;
+    --sidebar-border: 20 15% 22%;
+    --sidebar-ring: 27 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-size: 18px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-dark {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Mic animations */
+  .mic-pulse {
+    animation: mic-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .mic-ring-1 {
+    animation: mic-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .mic-ring-2 {
+    animation: mic-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite 0.5s;
+  }
+
+  .mic-ring-3 {
+    animation: mic-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite 1s;
+  }
+
+  /* Floating animation */
+  .float-anim {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* Breathing glow */
+  .breathe-glow {
+    animation: breathe-glow 3s ease-in-out infinite;
+  }
+
+  /* Waveform bars */
+  .wave-bar {
+    animation: wave-bar 0.8s ease-in-out infinite alternate;
+  }
+
+  /* Ripple effect */
+  .btn-ripple {
+    @apply relative overflow-hidden;
+  }
+  .btn-ripple::after {
+    content: '';
+    @apply absolute inset-0 bg-white/20 rounded-full scale-0 opacity-0;
+    transition: transform 0.5s, opacity 0.3s;
+  }
+  .btn-ripple:active::after {
+    @apply scale-150 opacity-100;
+    transition: 0s;
+  }
+
+  /* Scroll reveal */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mandala watermark */
+  .mandala-bg::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, hsl(27 100% 55% / 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+}
+
+@keyframes mic-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 hsl(27 100% 55% / 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px 15px hsl(27 100% 55% / 0.2);
+  }
+}
+
+@keyframes mic-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes breathe-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px 5px hsl(27 100% 55% / 0.2), 0 0 60px 10px hsl(27 100% 55% / 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px 10px hsl(27 100% 55% / 0.35), 0 0 80px 20px hsl(27 100% 55% / 0.15);
+  }
+}
+
+@keyframes wave-bar {
+  0% { height: 8px; }
+  100% { height: 28px; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
