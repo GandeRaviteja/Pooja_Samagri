@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart, Menu, X, Flame, ChevronDown, Search, User } from "lucide-react";
+import { ShoppingCart, Menu, X, ChevronDown, Search, User, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const languages = ["English", "हिन्दी", "తెలుగు", "தமிழ்"];
 
@@ -17,6 +18,24 @@ const Navbar = ({ lang, onLangChange }: NavbarProps) => {
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
+  // We're using custom native toggling since the previous Next-Themes implementation had issues
+  const [isDark, setIsDark] = useState(() => {
+    // Check initial state
+    if (typeof window !== "undefined") {
+      return document.documentElement.classList.contains("dark");
+    }
+    return false;
+  });
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      setIsDark(true);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -34,17 +53,12 @@ const Navbar = ({ lang, onLangChange }: NavbarProps) => {
   };
 
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-      scrolled
-        ? "bg-card/80 backdrop-blur-xl shadow-md border-b border-border/50"
-        : "bg-card/95 backdrop-blur-md border-b border-border"
-    }`}>
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
+      ? "bg-card/80 backdrop-blur-xl shadow-md border-b border-border/50"
+      : "bg-card/95 backdrop-blur-md border-b border-border"
+      }`}>
       <div className="container mx-auto flex items-center justify-between py-3 px-4">
-        {/* Logo */}
         <button onClick={() => navigate("/")} className="flex items-center gap-2.5 shrink-0">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-saffron-light to-saffron-dark flex items-center justify-center shadow-sm">
-            <Flame className="w-5 h-5 text-primary-foreground" />
-          </div>
           <span className="font-display text-lg font-bold text-foreground leading-tight hidden sm:block">
             Divya Pooja Samagri
           </span>
@@ -73,8 +87,19 @@ const Navbar = ({ lang, onLangChange }: NavbarProps) => {
           <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Offers</a>
         </div>
 
-        {/* Right side */}
         <div className="flex items-center gap-2">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-xl bg-secondary/70 hover:bg-secondary transition-colors btn-ripple"
+            aria-label="Toggle theme"
+          >
+            {isDark ? (
+              <Moon className="h-5 w-5 text-foreground" />
+            ) : (
+              <Sun className="h-5 w-5 text-foreground" />
+            )}
+          </button>
           {/* Language */}
           <div className="relative hidden sm:block">
             <button
@@ -89,9 +114,8 @@ const Navbar = ({ lang, onLangChange }: NavbarProps) => {
                   <button
                     key={l}
                     onClick={() => { onLangChange(l); setLangOpen(false); }}
-                    className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                      lang === l ? "bg-primary/10 text-primary font-medium" : "hover:bg-secondary/80"
-                    }`}
+                    className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${lang === l ? "bg-primary/10 text-primary font-medium" : "hover:bg-secondary/80"
+                      }`}
                   >
                     {l}
                   </button>
@@ -139,16 +163,23 @@ const Navbar = ({ lang, onLangChange }: NavbarProps) => {
           <button onClick={() => { navigate("/"); setMenuOpen(false); }} className="block text-lg font-medium text-foreground">Home</button>
           <button onClick={() => { navigate("/categories"); setMenuOpen(false); }} className="block text-lg font-medium text-muted-foreground">Categories</button>
           <a href="#" className="block text-lg font-medium text-muted-foreground">Offers</a>
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 text-lg font-medium text-muted-foreground"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            Toggle Theme
+          </button>
           <div className="flex gap-2 pt-2 flex-wrap">
             {languages.map((l) => (
               <button
                 key={l}
                 onClick={() => { onLangChange(l); }}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  lang === l
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "bg-secondary text-secondary-foreground"
-                }`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${lang === l
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-secondary text-secondary-foreground"
+                  }`}
               >
                 {l}
               </button>
