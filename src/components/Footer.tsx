@@ -8,7 +8,7 @@ const Footer = () => (
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-saffron-light to-saffron-dark flex items-center justify-center">
             <Flame className="w-4 h-4 text-primary-foreground" />
           </div>
-          <span className="font-display text-lg font-bold text-foreground">Divya Pooja Samagri</span>
+          <span className="font-display text-lg font-bold text-foreground">Ravi Pooja Samagri</span>
         </div>
 
         <div className="flex items-center gap-6 text-sm text-muted-foreground">
